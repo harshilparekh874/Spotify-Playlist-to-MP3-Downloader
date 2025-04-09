@@ -1,0 +1,5 @@
+Flask
+flask-socketio
+spotipy
+yt-dlp
+youtube-search-python
