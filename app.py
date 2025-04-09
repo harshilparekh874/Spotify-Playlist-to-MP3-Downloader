@@ -15,8 +15,8 @@ socketio = SocketIO(app)
 # Configuration Section
 # ------------------------------------------------------------------
 # Hardcoded Spotify API credentials (for personal testing only)
-CLIENT_ID = "8c640b4ea5c042678d3c04c6817a7f7e"
-CLIENT_SECRET = "c2467082ff084339aa6ec3c39a1c06de"
+CLIENT_ID = "Your Client ID"
+CLIENT_SECRET = "Your Client Secret"
 
 # FFmpeg location (update this if needed)
 FFMPEG_LOCATION = r"C:\ffmpeg\ffmpeg-master-latest-win64-gpl-shared\ffmpeg-master-latest-win64-gpl-shared\bin"
