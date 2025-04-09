@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spotify to MP3 Downloader</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+  </style>
+  <!-- Include the Socket.IO client library -->
+  <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+</head>
+<body class="bg-gray-50">
+  <!-- Navigation: Only Brand -->
+  <nav class="bg-white shadow-lg">
+    <div class="max-w-6xl mx-auto px-4">
+      <div class="flex justify-between items-center">
+        <a href="#" class="py-4 px-2">
+          <span class="font-semibold text-gray-500 text-xl">Spotify to MP3 Downloader</span>
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section with Playlist Form -->
+  <section class="py-20 bg-gradient-to-r from-blue-500 to-indigo-600">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col items-center">
+        <h1 class="text-4xl font-bold text-white text-center">Spotify to MP3 Downloader</h1>
+        <p class="text-xl text-gray-100 mt-4 text-center">
+          Enter your Spotify Playlist URL or ID to download the songs as MP3 files.
+        </p>
+        <form id="playlistForm" class="w-full max-w-xl mt-8">
+          <input type="text" name="playlist" placeholder="Enter Spotify Playlist URI/Link or ID" class="w-full p-4 rounded-lg focus:outline-none" required>
+          <button type="submit" class="mt-4 w-full bg-white text-blue-600 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+            Download MP3s
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer: Only App Name -->
+  <footer class="bg-gray-800 text-white py-6">
+    <div class="container mx-auto text-center">
+      <p>Spotify to MP3 Downloader - Harshil Parekh</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript for handling form submission and notifications -->
+  <script>
+    // Connect to the Socket.IO server
+    var socket = io();
+    // Listen for download completion events and display pop-up alerts
+    socket.on('download_complete', function(data) {
+      alert(data.message);
+    });
+
+    // Intercept form submission, send data via AJAX, and prevent page reload.
+    document.getElementById("playlistForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      var formData = new FormData(e.target);
+      fetch("/download", {
+        method: "POST",
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.status);
+      })
+      .catch(err => console.error("Error starting download:", err));
+    });
+  </script>
+</body>
+</html>
